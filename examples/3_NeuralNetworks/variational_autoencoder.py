@@ -66,12 +66,12 @@ input_image = tf.placeholder(tf.float32, shape=[None, image_dim])
 encoder = tf.matmul(input_image, weights['encoder_h1']) + biases['encoder_b1']
 encoder = tf.nn.tanh(encoder)
 z_mean = tf.matmul(encoder, weights['z_mean']) + biases['z_mean']
-z_std = tf.matmul(encoder, weights['z_std']) + biases['z_std']
+z_std = tf.matmul(encoder, weights['z_std']) + biases['z_std'] # z_std=lnσ^2， σ必须为正数
 
 # Sampler: Normal (gaussian) random distribution
 eps = tf.random_normal(tf.shape(z_std), dtype=tf.float32, mean=0., stddev=1.0,
                        name='epsilon')
-z = z_mean + tf.exp(z_std / 2) * eps
+z = z_mean + tf.exp(z_std / 2) * eps # σ = exp(z_std / 2)
 
 # Building the decoder (with scope to re-use these layers later)
 decoder = tf.matmul(z, weights['decoder_h1']) + biases['decoder_b1']
