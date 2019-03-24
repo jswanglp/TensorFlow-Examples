@@ -82,10 +82,12 @@ decoder = tf.nn.sigmoid(decoder)
 
 # Define VAE Loss
 def vae_loss(x_reconstructed, x_true):
-    # Reconstruction loss
-    encode_decode_loss = x_true * tf.log(1e-10 + x_reconstructed) \
-                         + (1 - x_true) * tf.log(1e-10 + 1 - x_reconstructed)
-    encode_decode_loss = -tf.reduce_sum(encode_decode_loss, 1)
+    # # Reconstruction loss
+    # encode_decode_loss = x_true * tf.log(1e-10 + x_reconstructed) \
+    #                      + (1 - x_true) * tf.log(1e-10 + 1 - x_reconstructed)
+    # encode_decode_loss = -tf.reduce_sum(encode_decode_loss, 1)
+    # mse loss
+    encode_decode_loss = 0.5 * tf.reduce_sum(tf.square(x_reconstructed - x_true))
     # KL Divergence loss
     kl_div_loss = 1 + z_std - tf.square(z_mean) - tf.exp(z_std)
     kl_div_loss = -0.5 * tf.reduce_sum(kl_div_loss, 1)
