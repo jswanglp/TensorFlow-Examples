@@ -8,19 +8,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import time
-import cv2
+import cv2, os
 
 tf.logging.set_verbosity(tf.logging.ERROR)
 
 # Import MNIST data
 from tensorflow.examples.tutorials.mnist import input_data
-path_data = '/content/MNIST_data' #@param {type: "string"}
+path_data = '/MNIST_data' #@param {type: "string"}
+# path_data = r'E:\Anaconda2\Programs\MNIST_data'
 mnist = input_data.read_data_sets(path_data, one_hot=True)
-# mnist = input_data.read_data_sets("E:\Anaconda2\Programs\MNIST_data", one_hot=True)
 
 # Training Parameters
 learning_rate = 0.003 #@param {type: "number"}
-num_steps = 50000 #@param {type: "integer"}
+num_steps = 5000 #@param {type: "integer"}
 batch_size = 48 #@param {type: "integer"}
 
 display_step = 1000
@@ -133,6 +133,7 @@ with tf.Session() as sess:
             canvas_recon[i * 28:(i + 1) * 28, j * 28:(j + 1) * 28] = \
                 g[j].reshape([28, 28])
 
+    # 16 张 mnist 图像，及重建后的图像
     fig = plt.figure(1, figsize=(10, 5))
     image_names = ["Original Images", "Reconstructed Images"]
     images_o_r = [canvas_orig, canvas_recon]
@@ -144,6 +145,7 @@ with tf.Session() as sess:
         ax.grid()
     plt.show()
 
+    # 对应的 16 张特征（encode）图
     fig_f = plt.figure(2, figsize=(5, 5))
     G = gridspec.GridSpec(n, n)
     G.wspace, G.hspace = 0.05, 0.05
@@ -155,14 +157,16 @@ with tf.Session() as sess:
 
     plt.show()
     
-    path_test = '/content/GoogleDrive/MATLAB/number2.jpg' #@param {type: "string"}
+    file_path = os.path.dirname(os.path.abspath(__file__))
+    path_test = os.path.join(file_path, 'number2.jpg')
+    
     img_test = cv2.imread(path_test, cv2.IMREAD_GRAYSCALE)
     img_re = cv2.resize(img_test, dsize=(28, 28), interpolation=cv2.INTER_LINEAR)
     img_t = (255 - img_re.reshape(1,-1)) / 255
     img_enco, img_deco = sess.run([encoder_op, decoder_op], feed_dict={X: img_t})
     fig = plt.figure(3, figsize=(10, 5))
     image_names = ["Original Images", "Reconstructed Images"]
-    images_o_r = [img_re, img_deco.reshape(28, 28)]
+    images_o_r = [img_re, 255 - img_deco.reshape(28, 28)]
     AX = [fig.add_subplot(i) for i in range(121, 123)]
     for na, img, ax in zip(image_names, images_o_r, AX):
         ax.imshow(img, origin="upper", cmap="gray")
