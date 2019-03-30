@@ -17,8 +17,8 @@ tf.logging.set_verbosity(tf.logging.ERROR)
 tf.app.flags.DEFINE_float('learning_rate', 3e-4, "learning rate, default is 0.0003")
 tf.app.flags.DEFINE_float('scale_factor', 3000, "scale factor of l2 regularization, default is 3000")
 
-tf.app.flags.DEFINE_integer('batch_size', 256, 'batch size, default is 256')
-tf.app.flags.DEFINE_integer('num_epochs', 3000, 'number of epochs, default is 3000')
+tf.app.flags.DEFINE_integer('batch_size', 128, 'batch size, default is 128')
+tf.app.flags.DEFINE_integer('num_epochs', 6000, 'number of epochs, default is 6000')
 
 tf.app.flags.DEFINE_string('event_path', os.path.dirname(os.path.abspath(__file__)) + '/Tensorboard', 'Directory where event logs are written to')
 tf.app.flags.DEFINE_string('checkpoint_path', os.path.dirname(os.path.abspath(__file__)) + '/Checkpoints', 'Directory where checkpoints are written to')
@@ -45,8 +45,8 @@ if __name__ == '__main__':
         
         # 指数衰减型 learning_rate，衰减因子 0.9，衰减步数 100
         global_step = tf.Variable(0, name='global_step', trainable=False)
-        decay_steps = 100
-        decay_rate = 0.95
+        decay_steps = 400
+        decay_rate = 0.90
         learning_rate = tf.train.exponential_decay(FLAGS.learning_rate,
                                                     global_step=global_step,
                                                     decay_steps=decay_steps,
@@ -93,13 +93,13 @@ if __name__ == '__main__':
             h_pool2_fla = tf.layers.flatten(h_pool2)
             num_f = h_pool2_fla.get_shape().as_list()[-1]
         
-            w_fc1 = tf.Variable(tf.truncated_normal([num_f, 512], stddev=0.1), name='weights_fc1')
-            b_fc1 = tf.Variable(tf.constant(0.1, shape=[512]), name='bias_fc1')
+            w_fc1 = tf.Variable(tf.truncated_normal([num_f, 128], stddev=0.1), name='weights_fc1')
+            b_fc1 = tf.Variable(tf.constant(0.1, shape=[128]), name='bias_fc1')
             h_fc1 = tf.nn.relu(tf.matmul(h_pool2_fla, w_fc1) + b_fc1)
             h_drop1 = tf.nn.dropout(h_fc1, keep_prob=keep_pro, name='Dropout')
 
         with tf.name_scope('Output'):
-            w_fc2 = tf.Variable(tf.truncated_normal([512, 10], stddev=0.1), name='weights_fc2')
+            w_fc2 = tf.Variable(tf.truncated_normal([128, 10], stddev=0.1), name='weights_fc2')
             b_fc2 = tf.Variable(tf.constant(0.1, shape=[10]), name='bias_fc2')
             h_fc2 = tf.matmul(h_drop1, w_fc2) + b_fc2
     
@@ -159,7 +159,7 @@ if __name__ == '__main__':
                 acc *= 100
                 num_e = str(num + 1)
                 print_list = [num_e, loss, acc]
-                if (num + 1) % 200 == 0:
+                if (num + 1) % 400 == 0:
                     print('Keep on training ========== (。・`ω´・) ========')
                     # print(b_x.shape)
                     # print(b_t)
