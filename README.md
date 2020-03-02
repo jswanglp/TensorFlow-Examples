@@ -1,10 +1,10 @@
 # TensorFlow Examples
 
-This tutorial was designed for easily diving into TensorFlow, through examples. For readability, it includes both notebooks and source codes with explanation.
+This tutorial was designed for easily diving into TensorFlow, through examples. For readability, it includes both notebooks and source codes with explanation, for both TF v1 & v2.
 
 It is suitable for beginners who want to find clear and concise examples about TensorFlow. Besides the traditional 'raw' TensorFlow implementations, you can also find the latest TensorFlow API practices (such as `layers`, `estimator`, `dataset`, ...).
 
-**Update (07/25/2018):** Add new examples (GBDT, Word2Vec) + TF1.9 compatibility! (TF v1.9+ recommended).
+**Update (08/17/2019):** Added new [TensorFlow 2.0 examples](tensorflow_v2)! (more coming soon).
 
 *If you are using older TensorFlow version (0.11 and under), please take a [look here](https://github.com/aymericdamien/TensorFlow-Examples/tree/0.11).*
 
@@ -60,16 +60,23 @@ It is suitable for beginners who want to find clear and concise examples about T
 - **Build an image dataset** ([notebook](https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/5_DataManagement/build_an_image_dataset.ipynb)) ([code](https://github.com/aymericdamien/TensorFlow-Examples/blob/master/examples/5_DataManagement/build_an_image_dataset.py)). Build your own images dataset with TensorFlow data queues, from image folders or a dataset file.
 - **TensorFlow Dataset API** ([notebook](https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/5_DataManagement/tensorflow_dataset_api.ipynb)) ([code](https://github.com/aymericdamien/TensorFlow-Examples/blob/master/examples/5_DataManagement/tensorflow_dataset_api.py)). Introducing TensorFlow Dataset API for optimizing the input data pipeline.
 - **Simple CNN with Dataset API** ([colab notebook](/notebooks/5_DataManagement/simple_cnn_dataset.ipynb)) ([code](/examples/5_DataManagement/simple_cnn_dataset.py)). Using the tensorflow-dataset-based API to build a simple convolutional neural network to classify mnist data sets.
+- **Load and Parse data** ([notebook](https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/5_DataManagement/load_data.ipynb)). Build efficient data pipeline (Numpy arrays, Images, CSV files, custom data, ...).
+- **Build and Load TFRecords** ([notebook](https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/5_DataManagement/tfrecords.ipynb)). Convert data into TFRecords format, and load them.
+- **Image Transformation (i.e. Image Augmentation)** ([notebook](https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/5_DataManagement/image_transformation.ipynb)). Apply various image augmentation techniques, to generate distorted images for training.
 
 #### 6 - Multi GPU
 - **Basic Operations on multi-GPU** ([notebook](https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/6_MultiGPU/multigpu_basics.ipynb)) ([code](https://github.com/aymericdamien/TensorFlow-Examples/blob/master/examples/6_MultiGPU/multigpu_basics.py)). A simple example to introduce multi-GPU in TensorFlow.
 - **Train a Neural Network on multi-GPU** ([notebook](https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/6_MultiGPU/multigpu_cnn.ipynb)) ([code](https://github.com/aymericdamien/TensorFlow-Examples/blob/master/examples/6_MultiGPU/multigpu_cnn.py)). A clear and simple TensorFlow implementation to train a convolutional neural network on multiple GPUs.
 
+## TensorFlow 2.0
+
+The tutorial index for TF v2 is available here: [TensorFlow 2.0 Examples](tensorflow_v2).
+
 ## Dataset
 Some examples require MNIST dataset for training and testing. Don't worry, this dataset will automatically be downloaded when running examples.
 MNIST is a database of handwritten digits, for a quick description of that dataset, you can check [this notebook](https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/0_Prerequisite/mnist_dataset_intro.ipynb).
 
-Official Website: [http://yann.lecun.com/exdb/mnist/](http://yann.lecun.com/exdb/mnist/)
+Official Website: [http://yann.lecun.com/exdb/mnist/](http://yann.lecun.com/exdb/mnist/).
 
 ## Installation
 
@@ -83,7 +90,7 @@ To run them, you also need the latest version of TensorFlow. To install it:
 pip install tensorflow
 ```
 
-or (if you want GPU support):
+or (with GPU support):
 ```
 pip install tensorflow_gpu
 ```
